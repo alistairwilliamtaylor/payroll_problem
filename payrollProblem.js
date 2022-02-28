@@ -1,3 +1,5 @@
+const prompt = require('prompt')
+
 const grossIncome = salary => salary / 12;
 const incomeTax = salary => {
         if (salary < 18200) {
@@ -13,4 +15,11 @@ const incomeTax = salary => {
         } 
 }
 
-console.log(incomeTax(72000));
+prompt.get('username', (err, result) => {
+    if (err) {
+        return "whoops I don't understand"
+    } else {
+        console.log(`your username is ${result.username}`);
+    }
+})
+// console.log(incomeTax(72000));

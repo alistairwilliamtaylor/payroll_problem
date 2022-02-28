@@ -1,0 +1,23 @@
+{
+  "name": "payroll_problem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "payrollProblem.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alistairwilliamtaylor/payroll_problem.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alistairwilliamtaylor/payroll_problem/issues"
+  },
+  "homepage": "https://github.com/alistairwilliamtaylor/payroll_problem#readme",
+  "dependencies": {
+    "prompt": "^1.2.2"
+  }
+}
