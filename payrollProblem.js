@@ -15,11 +15,22 @@ const incomeTax = salary => {
         } 
 }
 
-prompt.get('username', (err, result) => {
+prompt.message = 'Please enter your ';
+prompt.delimiter = '';
+prompt.colors = false;
+
+prompt.get(['name','surname','annual salary'], (err, result) => {
     if (err) {
         return "whoops I don't understand"
     } else {
-        console.log(`your username is ${result.username}`);
+        const taxOwed = incomeTax(result['annual salary'])
+        const netIncome = result['annual salary'] - taxOwed;
+        console.log(`
+        Name: ${result.name} ${result.surname}
+        Gross Income: ${result['annual salary']}
+        Income Tax: ${taxOwed}
+        Net Income: ${netIncome}
+        `);
     }
 })
 // console.log(incomeTax(72000));
