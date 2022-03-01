@@ -15,11 +15,13 @@ const incomeTax = salary => {
         } 
 }
 
+const superContribution = (salary, superRate) => salary * (superRate/100)
+
 prompt.message = 'Please enter your ';
 prompt.delimiter = '';
 prompt.colors = false;
 
-prompt.get(['name','surname','annual salary'], (err, result) => {
+prompt.get(['name','surname','annual salary', 'super rate'], (err, result) => {
     if (err) {
         return "whoops I don't understand"
     } else {
@@ -30,7 +32,7 @@ prompt.get(['name','surname','annual salary'], (err, result) => {
         Gross Income: ${result['annual salary']}
         Income Tax: ${taxOwed}
         Net Income: ${netIncome}
+        Super: ${superContribution(result['annual salary'], result['super rate'])}
         `);
     }
-})
-// console.log(incomeTax(72000));
+})   
