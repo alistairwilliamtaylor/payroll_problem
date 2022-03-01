@@ -43,11 +43,11 @@ prompt.get(['name','surname','annual salary', 'super rate', 'start date', 'end d
     if (err) {
         return "whoops I don't understand"
     } else {
-        const monthsWorked = numberOfMonthsWorked(result['start date'], result['end date'])
-        const grossIncome = result['annual salary'] / 12 * monthsWorked 
-        const taxOwed = incomeTax(result['annual salary']) / 12 * monthsWorked
+        const monthsWorked = numberOfMonthsWorked(result['start date'], result['end date']);
+        const grossIncome = Math.round(result['annual salary'] / 12 * monthsWorked);
+        const taxOwed = Math.round(incomeTax(result['annual salary']) / 12 * monthsWorked);
         const netIncome = grossIncome - taxOwed;
-        const superPaid = superContribution(result['annual salary'], result['super rate']) / 12 * monthsWorked
+        const superPaid = Math.round(superContribution(result['annual salary'], result['super rate']) / 12 * monthsWorked);
         console.log(`
         Name: ${result.name} ${result.surname}
         Months Worked: ${monthsWorked}
