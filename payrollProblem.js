@@ -37,22 +37,57 @@ prompt.message = 'Please enter your ';
 prompt.delimiter = '';
 prompt.colors = false;
 
-prompt.get(['name','surname','annual salary', 'super rate', 'start date', 'end date'], (err, result) => {
-    if (err) {
-        return "whoops I don't understand"
-    } else {
-        const monthsWorked = numberOfMonthsWorked(result['start date'], result['end date']);
-        const grossIncome = Math.round(result['annual salary'] / 12 * monthsWorked);
-        const taxOwed = Math.round(incomeTax(result['annual salary']) / 12 * monthsWorked);
-        const netIncome = grossIncome - taxOwed;
-        const superPaid = Math.round(superContribution(result['annual salary'], result['super rate']) / 12 * monthsWorked);
-        console.log(`
-        Name: ${result.name} ${result.surname}
-        Months Worked: ${monthsWorked}
-        Gross Income: ${grossIncome}
-        Income Tax: ${taxOwed}
-        Net Income: ${netIncome}
-        Super: ${superPaid}
-        `);
+const schema = {
+    properties: {
+        name: {
+            pattern: /^[a-zA-Z\s\-]+$/,
+            message: 'Name may only contain letters, spaces, or dashes',
+            required: true
+        },
+        surname: {
+            pattern: /^[a-zA-Z\s\-]+$/,
+            message: 'Surname may only contain letters, spaces, or dashes',
+            required: true
+        },
+        'annual salary': {
+            pattern: /^[0-9]+$/,
+            message: 'Salary must be a positive integer',
+            required: true
+        },
+        'super rate': {
+            pattern: /^([0-9]|[1-4][0-9]|50)$/,
+            message: 'Salary must be a positive integer between 0 and 50',
+            required: true
+        }
     }
-})   
+}
+
+prompt.get(schema, (err, result) => {
+    console.log('super rate is ' + result['super rate']);
+})
+
+
+// prompt.get(['name','surname','annual salary', 'super rate', 'start date', 'end date'], (err, result) => {
+//     if (err) {
+//         return "whoops I don't understand"
+//     } else {
+//         const monthsWorked = numberOfMonthsWorked(result['start date'], result['end date']);
+//         const grossIncome = Math.round(result['annual salary'] / 12 * monthsWorked);
+//         const taxOwed = Math.round(incomeTax(result['annual salary']) / 12 * monthsWorked);
+//         const netIncome = grossIncome - taxOwed;
+//         const superPaid = Math.round(superContribution(result['annual salary'], result['super rate']) / 12 * monthsWorked);
+//         console.log(`
+//         Name: ${result.name} ${result.surname}
+//         Months Worked: ${monthsWorked}
+//         Gross Income: ${grossIncome}
+//         Income Tax: ${taxOwed}
+//         Net Income: ${netIncome}
+//         Super: ${superPaid}
+//         `);
+//     }
+// })
+
+// next steps
+// get stuck into regEx - maybe name or salary first
+// make sure it successfully throws errors
+// then finally get those dates formatted
