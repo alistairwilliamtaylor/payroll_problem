@@ -1,12 +1,29 @@
 const fs = require('fs')
 const prompt = require('prompt')
-const { parse } = require('csv-parse')
+const { parse } = require('csv-parse');
+const { kStringMaxLength } = require('buffer');
 
 const csvInput = fs.readFileSync('sample_input.csv').toString()
 
 parse(csvInput, {}, (err, records) => {
-        console.log(records.slice(1))
+        const individualRecords = records.slice(1).map(record => interpretCSVInput(record));
+        console.log(individualRecords);
 });
+
+const interpretCSVInput = record => {
+        const [name, surname, salary, superPercentage, payPeriod] = record;
+        const superRate = superPercentage.substring(0, superPercentage.length - 1);
+        const [startDate, endDate] = payPeriod.split(' - ');
+        const personalDetails = {
+                name,
+                surname,
+                'annual salary': salary,
+                'super rate': superRate,
+                'start date': startDate,
+                'end date': endDate,
+        } 
+        return personalDetails
+}
 
 // const incomeTax = salary => {
 //         if (salary < 18200) {
