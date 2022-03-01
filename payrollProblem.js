@@ -58,12 +58,22 @@ const schema = {
             pattern: /^([0-9]|[1-4][0-9]|50)$/,
             message: 'Salary must be a positive integer between 0 and 50',
             required: true
-        }
+        },
+        'start date': {
+            pattern: /^0?1 (January|February|March|April|May|June|July|August|September|October|November|December)$/,
+            message: 'Date must be the first day of a month e.g. 1 February',
+            required: true
+        },
+        'end date': {
+            pattern: /^((31 (January|March|May|July|August|October|December))|(2[89] February)|(30 (September|April|June|November)))$/,
+            message: 'Date must be the last day of a month e.g. 30 September',
+            required: true
+        },
     }
 }
 
 prompt.get(schema, (err, result) => {
-    console.log('super rate is ' + result['super rate']);
+    console.log('end date is ' + result['end date']);
 })
 
 
