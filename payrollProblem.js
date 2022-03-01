@@ -1,7 +1,5 @@
 const prompt = require('prompt')
 
-const monthly = salary => salary / 12;
-
 const incomeTax = salary => {
         if (salary < 18200) {
             return 0
