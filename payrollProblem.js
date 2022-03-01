@@ -73,31 +73,19 @@ const schema = {
 }
 
 prompt.get(schema, (err, result) => {
-    console.log('end date is ' + result['end date']);
+    let [startDay, startMonth] = result['start date'].split(' ')
+    const endMonth = result['end date'].split(' ')[1]
+    const monthsWorked = numberOfMonthsWorked(startMonth, endMonth);
+    const grossIncome = Math.round(result['annual salary'] / 12 * monthsWorked);
+    const taxOwed = Math.round(incomeTax(result['annual salary']) / 12 * monthsWorked);
+    const netIncome = grossIncome - taxOwed;
+    const superPaid = Math.round(superContribution(result['annual salary'], result['super rate']) / 12 * monthsWorked);
+    console.log(`
+    Name: ${result.name} ${result.surname}
+    Pay Period: ${startDay.length === 1 ? '0' + result['start date'] : result['start date']} - ${result['end date']}
+    Gross Income: ${grossIncome}
+    Income Tax: ${taxOwed}
+    Net Income: ${netIncome}
+    Super: ${superPaid}
+    `);
 })
-
-
-// prompt.get(['name','surname','annual salary', 'super rate', 'start date', 'end date'], (err, result) => {
-//     if (err) {
-//         return "whoops I don't understand"
-//     } else {
-//         const monthsWorked = numberOfMonthsWorked(result['start date'], result['end date']);
-//         const grossIncome = Math.round(result['annual salary'] / 12 * monthsWorked);
-//         const taxOwed = Math.round(incomeTax(result['annual salary']) / 12 * monthsWorked);
-//         const netIncome = grossIncome - taxOwed;
-//         const superPaid = Math.round(superContribution(result['annual salary'], result['super rate']) / 12 * monthsWorked);
-//         console.log(`
-//         Name: ${result.name} ${result.surname}
-//         Months Worked: ${monthsWorked}
-//         Gross Income: ${grossIncome}
-//         Income Tax: ${taxOwed}
-//         Net Income: ${netIncome}
-//         Super: ${superPaid}
-//         `);
-//     }
-// })
-
-// next steps
-// get stuck into regEx - maybe name or salary first
-// make sure it successfully throws errors
-// then finally get those dates formatted
