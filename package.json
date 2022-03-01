@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/alistairwilliamtaylor/payroll_problem#readme",
   "dependencies": {
+    "csv-parse": "^5.0.4",
     "prompt": "^1.2.2"
   }
 }
