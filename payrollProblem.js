@@ -1,6 +1,7 @@
 const prompt = require('prompt')
 
-const grossIncome = salary => salary / 12;
+const monthly = salary => salary / 12;
+
 const incomeTax = salary => {
         if (salary < 18200) {
             return 0
@@ -17,22 +18,43 @@ const incomeTax = salary => {
 
 const superContribution = (salary, superRate) => salary * (superRate/100)
 
+const theMonths = {
+    January: 1,
+    February: 2,
+    March: 3,
+    April: 4,
+    May: 5,
+    June: 6,
+    July: 7,
+    August: 8,
+    September: 9,
+    October: 10,
+    November: 11,
+    December: 12
+}
+
+const numberOfMonthsWorked = (start, end) => theMonths[end] - (theMonths[start] - 1)
+
 prompt.message = 'Please enter your ';
 prompt.delimiter = '';
 prompt.colors = false;
 
-prompt.get(['name','surname','annual salary', 'super rate'], (err, result) => {
+prompt.get(['name','surname','annual salary', 'super rate', 'start date', 'end date'], (err, result) => {
     if (err) {
         return "whoops I don't understand"
     } else {
-        const taxOwed = incomeTax(result['annual salary'])
-        const netIncome = result['annual salary'] - taxOwed;
+        const monthsWorked = numberOfMonthsWorked(result['start date'], result['end date'])
+        const grossIncome = result['annual salary'] / 12 * monthsWorked 
+        const taxOwed = incomeTax(result['annual salary']) / 12 * monthsWorked
+        const netIncome = grossIncome - taxOwed;
+        const superPaid = superContribution(result['annual salary'], result['super rate']) / 12 * monthsWorked
         console.log(`
         Name: ${result.name} ${result.surname}
-        Gross Income: ${result['annual salary']}
+        Months Worked: ${monthsWorked}
+        Gross Income: ${grossIncome}
         Income Tax: ${taxOwed}
         Net Income: ${netIncome}
-        Super: ${superContribution(result['annual salary'], result['super rate'])}
+        Super: ${superPaid}
         `);
     }
 })   
