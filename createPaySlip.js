@@ -9,7 +9,14 @@ const createPayslip = data => {
     const taxOwed = Math.round(incomeTax(data['annual salary']) / 12 * monthsWorked);
     const netIncome = grossIncome - taxOwed;
     const superPaid = Math.round(superContribution(data['annual salary'], data['super rate']) / 12 * monthsWorked);
-    const payslipInfo = [name, formattedPayPeriod, grossIncome, taxOwed, netIncome, superPaid]
+    const payslipInfo = {
+        name, 
+        'pay period': formattedPayPeriod, 
+        'gross income': grossIncome, 
+        'income tax': taxOwed, 
+        'net income': netIncome, 
+        'super': superPaid,
+    }
     return payslipInfo
 }
 

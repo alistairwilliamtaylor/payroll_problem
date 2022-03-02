@@ -9,14 +9,12 @@ const csvInput = fs.readFileSync('sample_input.csv').toString()
 
 parse(csvInput, {}, (err, records) => {
         const individualPayslipInfos = records.slice(1).map(record => createPayslip(interpretCSVInput(record)));
-        saveToCSV(individualPayslipInfos)
-        // console.log(individualPayslipInfos);
-        // individualPayslipInfos.forEach(info => printPaySlip(createPayslip(info)));
+        saveToCSV(individualPayslipInfos, 'example_output')
     });
     
-    const saveToCSV = async (payslips) => {
+    const saveToCSV = async (payslips, filename) => {
         const csv = new ObjectsToCsv(payslips);
-        await csv.toDisk('./thisThingOn.csv')
+        await csv.toDisk(`./${filename}.csv`)
         return 1
 } 
 
