@@ -1,15 +1,24 @@
 const fs = require('fs')
 const prompt = require('prompt')
 const { parse } = require('csv-parse');
-const createPayslip = require('./createPaySlip')
-const printPaySlip = require('./printPaySlip')
+const ObjectsToCsv = require('objects-to-csv')
+const createPayslip = require('./createPaySlip');
+const printPaySlip = require('./printPaySlip');
 
 const csvInput = fs.readFileSync('sample_input.csv').toString()
 
 parse(csvInput, {}, (err, records) => {
-        const individualPayslipInfos = records.slice(1).map(record => interpretCSVInput(record));
-        individualPayslipInfos.forEach(info => printPaySlip(createPayslip(info)));
-});
+        const individualPayslipInfos = records.slice(1).map(record => createPayslip(interpretCSVInput(record)));
+        saveToCSV(individualPayslipInfos)
+        // console.log(individualPayslipInfos);
+        // individualPayslipInfos.forEach(info => printPaySlip(createPayslip(info)));
+    });
+    
+    const saveToCSV = async (payslips) => {
+        const csv = new ObjectsToCsv(payslips);
+        await csv.toDisk('./thisThingOn.csv')
+        return 1
+} 
 
 const interpretCSVInput = record => {
         const [name, surname, salary, superPercentage, payPeriod] = record;
